@@ -53,5 +53,5 @@
   document.addEventListener('keydown', handleShortcut);
 
   // Delay execution by 3 seconds using setTimeout
-  setTimeout(addUIButton, 9000);
+  setTimeout(addUIButton, 10000);
 })();
