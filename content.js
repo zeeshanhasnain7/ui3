@@ -1,6 +1,49 @@
 (function() {
   'use strict';
 
+  /* this the start of the chat ticket escalation option */  
+
+
+(function() {
+    'use strict';
+
+    // Function to update the value as a link
+    function updateDataCyValue() {
+        const element = document.querySelector('[data-cy="cs-email-box_subject-header-title"]');
+        if (element) {
+            const link = document.createElement('a');
+            const text = element.textContent.trim();
+            const startIndex = text.indexOf('Escalate from HeroCare TicketID:    ') + 'Escalate from HeroCare TicketID:    '.length;
+            const ticketId = text.substring(startIndex);
+            link.href = 'https://foodpanda-asia.deliveryherocare.com/cases/' + ticketId;
+            link.target = '_blank'; // Open link in a new tab
+            link.textContent = ticketId;
+            element.textContent = '';
+            element.appendChild(link);
+        }
+    }
+
+    // Create a Mutation Observer
+    const observer = new MutationObserver(function(mutationsList, observer) {
+        for (let mutation of mutationsList) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                // Check if the added node contains the specified data-cy element
+                const addedNodes = Array.from(mutation.addedNodes);
+                if (addedNodes.some(node => node.querySelector && node.querySelector('[data-cy="cs-email-box_subject-header-title"]'))) {
+                    // Wait for 2 seconds before updating the data-cy value
+                    setTimeout(updateDataCyValue, 2000);
+                    break;
+                }
+            }
+        }
+    });
+
+    // Start observing mutations
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+
+/* this the end of the chat ticket escalation option */  
+
   // Function to add the UI toggle button
   function addUIButton() {
     var headerTag = document.getElementsByTagName('header')[0];
